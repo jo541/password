@@ -1,6 +1,6 @@
  $(function() {
         $('#submit').bind('click', function() {
-          $.getJSON($SCRIPT_ROOT + '/generate_pass', {
+          $.getJSON('/generate_pass', {
             a: $('input[value="special_char"]').val(),
             b: $('input[value="number"]').val()
           }, function(data) {
