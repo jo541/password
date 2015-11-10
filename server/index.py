@@ -1,23 +1,23 @@
 # coding: utf8
 from server import app,conn,cr
 from random import *
-from flask import render_template,url_for,request
+from flask import render_template,url_for,request,jsonify
 
 @app.route('/')
 def index():
-   	 url_for('static', filename='css')
-	 return render_template('index.html')
-@app.route('/generate_pass/',methods=['POST','GET'])
+	url_for('static', filename='css')
+	return render_template('index.html')
+
+@app.route('/generate_pass')
 def generate_pass():
 	password_to_return = ''
 	complete_num =''
 	number = False
 	special_char = False
-	if request.method == 'POST':
-		if request.form['number']:
-			number = True
-		if request.form['special_char']:
-			special_char = True
+	if request.args.get('number',False,type=bool):
+		number = True
+	if request.args.get('special_char',False,type=bool):
+		special_char = True
 	for i in range(0,6):
 		complete_num = ""
 		for j in range(0,6):
@@ -31,5 +31,5 @@ def generate_pass():
 			print(type(uni_word))
 			print(uni_word.encode('UTF-8'))
 			password_to_return += uni_word.encode('UTF-8')
-	return render_template('index.html',number_to_return=password_to_return)
+	return jsonify(number_to_return=password_to_return)
 
